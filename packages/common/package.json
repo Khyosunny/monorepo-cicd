@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "common",
+  "version": "1.0.0",
+  "description": "",
+  "license": "SEE LICENSE IN ../../LICENSE",
+  "main": "src/index.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "babel-loader": "^8.2.3",
+    "babel-preset-react-app": "^10.0.1"
+  }
+}
