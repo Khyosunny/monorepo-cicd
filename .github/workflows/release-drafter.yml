@@ -1,9 +1,7 @@
 name: Release Drafter
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - master
     paths:
@@ -12,7 +10,7 @@ on:
 
 jobs:
   update_release_draft:
-    # if: github.event.pull_request.merged == 'true'
+    if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
@@ -21,4 +19,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: |
-          echo ${{ github.head_ref }} ${{ github.event.action }} PR #${{ github.event.number }} has been merged
+          echo ${{ github.head_ref }} github.event.pull_request.merged
