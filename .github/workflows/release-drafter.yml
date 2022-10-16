@@ -8,7 +8,7 @@ on:
       - master
     paths:
       - packages/common/**
-      - packages/global/**
+      - packages/client/**
 
 jobs:
   update_release_draft:
