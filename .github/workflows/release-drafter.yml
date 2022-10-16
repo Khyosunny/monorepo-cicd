@@ -17,5 +17,3 @@ jobs:
           config-name: release-drafter-config.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          echo ${{ github.head_ref }} github.event.pull_request.merged
