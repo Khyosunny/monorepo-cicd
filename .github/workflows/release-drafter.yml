@@ -12,12 +12,12 @@ on:
 
 jobs:
   update_release_draft:
-    if: github.event.pull_request.merged == 'true'
+    # if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
       - run: |
-          echo ${{ github.event.action }} PR #${{ github.event.number }} has been merged
+          echo ${{ github.head_ref }} ${{ github.event.action }} PR #${{ github.event.number }} has been merged
         with:
           config-name: release-drafter-config.yml
         env:
