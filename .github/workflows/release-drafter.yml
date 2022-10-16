@@ -1,10 +1,14 @@
 name: Release Drafter
+
 on:
   pull_request:
     types:
       - closed
     branches:
       - master
+    paths:
+      - packages/common/**
+      - packages/global/**
 
 jobs:
   update_release_draft:
