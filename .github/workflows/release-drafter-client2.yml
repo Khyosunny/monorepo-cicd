@@ -1,0 +1,19 @@
+name: Release Drafter client 2
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - packages/common/**
+      - packages/client2/**
+
+jobs:
+  update_release_draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter-config.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

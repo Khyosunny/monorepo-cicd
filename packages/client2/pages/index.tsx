@@ -6,7 +6,7 @@ function HomePage() {
     <main>
       <h1>Hi</h1>
       <Button>Client2</Button>
-      <p>test 가보자고</p>
+      <p>22</p>
     </main>
   );
 }
