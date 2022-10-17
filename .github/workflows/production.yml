@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Vercel CLI
+
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI Client
+      - with:
+          path: packages/client
         run: npm install --global vercel@latest
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
