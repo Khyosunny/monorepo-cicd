@@ -20,5 +20,5 @@ jobs:
       - name: echo
         run: |
           echo '${{ toJSON(github) }}'
-          echo '${{ github.event.release.body }}''
-          echo '${{ contains(github.event.release.body, '#[0-9]*') }}''
+          echo '${{ github.event.release.body }}'
+          echo '${{ contains(github.event.release.body, '#[0-9]*') }}'
