@@ -9,16 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Vercel 배포'
     steps:
-      - run: gh pr view XXX --json files -q '.files[].path'
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # steps:
-    #   - uses: actions/checkout@v3
-    #   - name: Install Vercel CLI
-    #     run: npm install --global vercel@latest
-    #   - name: Deploy Project Artifacts to Vercel
-    #     run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-    #     env:
-    #       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
-    #       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
