@@ -10,7 +10,8 @@
     ]
   },
   "scripts": {
-    "client": "yarn workspace client dev"
+    "client": "yarn workspace client dev",
+    "client2": "yarn workspace client2 dev"
   },
   "author": "",
   "license": "MIT",

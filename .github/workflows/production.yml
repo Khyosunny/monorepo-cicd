@@ -21,3 +21,4 @@ jobs:
         run: |
           echo ${{ secrets.VERCEL_PROJECT_ID_TEST }} ${{ github.path }}
           echo "{path}" >> $GITHUB_PATH
+          echo ${GITHUB_WORKSPACE}
