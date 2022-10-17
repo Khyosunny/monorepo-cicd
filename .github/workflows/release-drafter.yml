@@ -12,11 +12,9 @@ jobs:
   update_release_draft:
     runs-on: ubuntu-latest
     steps:
-      - name: echo
-        run: |
-          echo ${{ github.action_path }} .... ${{ github.action_ref }}
       - uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter-config.yml
+      - run: gh pr view XXX --json files -q '.files[].path'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
