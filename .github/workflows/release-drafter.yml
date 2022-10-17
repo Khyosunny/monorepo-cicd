@@ -17,3 +17,6 @@ jobs:
           config-name: release-drafter-config.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: echo
+        run: |
+          echo ${{ github.action_path }} .... ${{ github.action_ref }}

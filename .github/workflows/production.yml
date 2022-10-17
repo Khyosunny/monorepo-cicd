@@ -20,7 +20,7 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       - name: echo
         run: |
-          echo ${{ github.workspace }} ${GITHUB_ACTION_PATH}
+          echo ${{ github.workspace }} ${{ github.action_path }}
       - name: ls1
         run: |
           ls -la
