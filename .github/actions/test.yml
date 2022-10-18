@@ -1,0 +1,20 @@
+
+name: 'test'
+
+
+inputs:
+  status:
+    required: false
+    default: 'client'
+
+
+
+runs:
+  using: 'composite'
+  steps:
+    - name: test action
+      id: 
+      run: echo ${{ inputs.status }}
+      shell: bash
+      run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
