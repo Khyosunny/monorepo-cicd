@@ -1,21 +1,14 @@
 name: 'test'
 
 inputs:
-  status:
-    description: 'status'
+  labels:
+    description: 'label name'
     required: false
-    default: 'common'
+    default: 'client'
 outputs:
   path-variable:
     description: 'sdfasdf'
-    value: ${{ steps.path-path.outputs.path-variable }}
 
 runs:
-  using: 'composite'
-  steps:
-    - name: test action
-      run: echo ${{ inputs.status }}
-      shell: bash
-    - id: path-path
-      run: echo "path-variable=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
+  using: 'node16'
+  main: './actions-scripts/use-the-api.mjs'

@@ -13,8 +13,6 @@ jobs:
 
       - uses: ./.github/actions/test
         id: foo
-        with:
-          status: 'client'
         # - name: Install Vercel CLI
         #   run: npm install --global vercel@latest
         # - name: Deploy Project Artifacts to Vercel
