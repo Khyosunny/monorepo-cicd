@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Vercel 배포'
     steps:
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3'
       # - name: Install Vercel CLI
       #   run: npm install --global vercel@latest
       # - name: Deploy Project Artifacts to Vercel
