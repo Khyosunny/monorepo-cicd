@@ -26,5 +26,5 @@ jobs:
           echo '${{ github.event.release.body }}'
           echo '${{ contains(github.event.release.body, '#[0-9]*') }}'
           echo '${{ github.action_path }}'
-          echo '${{ step.foo.outputs.pathVariable }}'
+          echo '${{ steps.foo.outputs.pathVariable }}'
         shell: bash
