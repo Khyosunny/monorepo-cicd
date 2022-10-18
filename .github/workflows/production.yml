@@ -22,3 +22,5 @@ jobs:
           echo '${{ toJSON(github) }}'
           echo '${{ github.event.release.body }}'
           echo '${{ contains(github.event.release.body, '#[0-9]*') }}'
+      - name: test
+        uses: ./.github/actions/test
