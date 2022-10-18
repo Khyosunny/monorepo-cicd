@@ -24,7 +24,7 @@ jobs:
       - run: |
           echo '${{ toJSON(github) }}'
           echo '${{ github.event.release.body }}'
-          echo '${{ contains(github.event.release.body, '#[0-9]*') }}'
+          echo '${{ contains(github.event.release.body, '#[0-9]+') }}'
           echo '${{ github.action_path }}'
           echo '${{ steps.foo.outputs.pathVariable }}'
         shell: bash
