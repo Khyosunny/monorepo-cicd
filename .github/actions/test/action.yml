@@ -2,12 +2,13 @@ name: 'test'
 
 inputs:
   status:
+    description: 'status'
     required: false
     default: 'common'
 outputs:
-  random-number:
+  path-variable:
     description: 'sdfasdf'
-    value: ${{ steps.path-path.outputs.pathVariable }}
+    value: ${{ steps.path-path.outputs.path-variable }}
 
 runs:
   using: 'composite'
@@ -16,7 +17,5 @@ runs:
       run: echo ${{ inputs.status }}
       shell: bash
     - id: path-path
-      run: echo "pathVariable=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      run: echo "path-variable=$(echo $RANDOM)" >> $GITHUB_OUTPUT
       shell: bash

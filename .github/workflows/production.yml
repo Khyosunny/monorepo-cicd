@@ -11,8 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: 'actions'
-        uses: ./.github/actions/test
+      - uses: ./.github/actions/test
         id: foo
         with:
           status: 'client'
@@ -25,8 +24,4 @@ jobs:
         #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       - name: echo
         run: |
-          echo '${{ toJSON(github) }}'
-          echo '${{ github.event.release.body }}'
-          echo '${{ contains(github.event.release.body, '#[0-9]+') }}'
-          echo '${{ github.action_path }}'
-          echo '${{ steps.foo.outputs.pathVariable }}'
+          echo '${{ steps.foo.outputs.path-variable }}'
