@@ -31,7 +31,10 @@ try {
   });
 
   const fileNames = pullList.map((file) => file.filename.includes('packages/'));
-  const labelName = fileNames.filter((path) => path.split('/')[1]);
+  if (fileNames.length === 0) return;
+
+  const labelName = fileNames.filter((path) => path.split('/'));
+  console.log('fileNames:: ', fileNames);
   console.log('labelName:: ', labelName);
   core.setOutput('label-list', labelName);
 
@@ -39,7 +42,7 @@ try {
     owner: 'Khyosunny',
     repo: 'monorepo-cicd',
     issue_number: pullNumber,
-    labels: labelName,
+    labels: labelName[1],
   });
   console.log('d..:', data);
   // }
