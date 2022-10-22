@@ -27,7 +27,7 @@ try {
   const { data: pullList } = await octokit.rest.pulls.listFiles({
     owner: 'Khyosunny',
     repo: 'monorepo-cicd',
-    pull_number: 73,
+    pull_number: pullNumber,
   });
 
   const fileNames = pullList
@@ -36,17 +36,17 @@ try {
   console.log('fileNames:: ', fileNames);
 
   if (fileNames.length === 0) throw new Error('No files changed');
-  const labelName = fileNames.map((path) => path.toString().split('/')[1]);
+  const labelName = fileNames.map((path) => path);
   console.log('labelName:: ', labelName);
   core.setOutput('label-list', labelName);
 
-  const { data } = await octokit.rest.issues.addLabels({
-    owner: 'Khyosunny',
-    repo: 'monorepo-cicd',
-    issue_number: pullNumber,
-    labels: labelName,
-  });
-  console.log('d..:', data);
+  // const { data } = await octokit.rest.issues.addLabels({
+  //   owner: 'Khyosunny',
+  //   repo: 'monorepo-cicd',
+  //   issue_number: pullNumber,
+  //   labels: labelName,
+  // });
+  // console.log('d..:', data);
   // }
 } catch (error) {
   core.setFailed(error.message);
