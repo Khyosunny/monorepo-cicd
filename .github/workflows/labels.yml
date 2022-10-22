@@ -28,8 +28,6 @@ jobs:
         id: labels-script
         with:
           number: ${{ github.event.number }}
-      - name: set label
-        
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
