@@ -16,13 +16,8 @@ jobs:
     steps:
       - name: Check out repo content
         uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'yarn'
       - name: Run script
-        uses: ./create-labels-script.mjs
+        uses: ./
         id: labels-script
         with:
           pr-number: ${{ github.event.number }}
