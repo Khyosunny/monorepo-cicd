@@ -12,8 +12,10 @@ jobs:
       issues: write
       pull-requests: write
     steps:
+      - name: Check out repo content
+        uses: actions/checkout@v3
       - name: Run script
-        uses: actions/labels@master
+        uses: ./.github/actions/labels
         id: labels-script
         with:
           pr-number: ${{ github.event.number }}
