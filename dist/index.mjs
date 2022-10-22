@@ -20152,7 +20152,7 @@ const octokit = new octokit__WEBPACK_IMPORTED_MODULE_1__/* .Octokit */ .vd({
 
 try {
   const pullNumber = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('pr-number');
-  console.log('pullNumber', pullNumber);
+  console.log('pullNumber..:', pullNumber);
   // const { data: allList } = await octokit.rest.pulls.list({
   //   owner: 'Khyosunny',
   //   repo: 'monorepo-cicd',
@@ -20174,18 +20174,23 @@ try {
     pull_number: pullNumber,
   });
 
-  const fileNames = pullList.map((file) => file.filename.includes('packages/'));
-  const labelName = fileNames.filter((path) => path.split('/')[1]);
+  const fileNames = pullList
+    .filter((file) => file.filename.includes('packages/'))
+    .map((files) => files.filename);
+  console.log('fileNames:: ', fileNames);
+
+  if (fileNames.length === 0) throw new Error('No files changed');
+  const labelName = fileNames.map((path) => path);
   console.log('labelName:: ', labelName);
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('label-list', labelName);
 
-  const { data } = await octokit.rest.issues.addLabels({
-    owner: 'Khyosunny',
-    repo: 'monorepo-cicd',
-    issue_number: pullNumber,
-    labels: labelName,
-  });
-  console.log('d..:', data);
+  // const { data } = await octokit.rest.issues.addLabels({
+  //   owner: 'Khyosunny',
+  //   repo: 'monorepo-cicd',
+  //   issue_number: pullNumber,
+  //   labels: labelName,
+  // });
+  // console.log('d..:', data);
   // }
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
