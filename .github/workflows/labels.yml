@@ -21,13 +21,13 @@ jobs:
           node-version: '16'
           cache: npm
 
-      - name: Install dependencies
-        run: npm install octokit
-
       - name: Run script
         uses: ./.github/actions/labels
         id: labels-script
         with:
           pr-number: ${{ github.event.number }}
+      - name: label list
+        run: |
+          echo "${{ steps.labels-script.outputs.label-list }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
