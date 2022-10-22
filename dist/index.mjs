@@ -20150,50 +20150,46 @@ const octokit = new octokit__WEBPACK_IMPORTED_MODULE_1__/* .Octokit */ .vd({
   auth: process.env.TOKEN,
 });
 
-const pullNumber = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('number');
-console.log('pullNumber', pullNumber);
-// const { data: allList } = await octokit.rest.pulls.list({
-//   owner: 'Khyosunny',
-//   repo: 'monorepo-cicd',
-//   state: 'open',
-//   sort: 'created',
-//   direction: 'desc',
-//   page: 1,
-//   per_page: 1,
-// });
-// console.log('allList: ', allList);
+try {
+  const pullNumber = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('pr-number');
+  console.log('pullNumber', pullNumber);
+  // const { data: allList } = await octokit.rest.pulls.list({
+  //   owner: 'Khyosunny',
+  //   repo: 'monorepo-cicd',
+  //   state: 'open',
+  //   sort: 'created',
+  //   direction: 'desc',
+  //   page: 1,
+  //   per_page: 1,
+  // });
+  // console.log('allList: ', allList);
 
-// if (allList.length > 0) {
-// const pullNumber = allList[0].number;
-// console.log('pullNumber: ', pullNumber);
+  // if (allList.length > 0) {
+  // const pullNumber = allList[0].number;
+  // console.log('pullNumber: ', pullNumber);
 
-const { data: pullList } = await octokit.rest.pulls.listFiles({
-  owner: 'Khyosunny',
-  repo: 'monorepo-cicd',
-  pull_number: 58,
-});
+  const { data: pullList } = await octokit.rest.pulls.listFiles({
+    owner: 'Khyosunny',
+    repo: 'monorepo-cicd',
+    pull_number: pullNumber,
+  });
 
-console.log(
-  'pulls - list files',
-  pullList,
-  'get list path: ',
-  pullList
-    .map((file) => file.filename)
-    .filter((path) => path.startsWith('packages/'))
-);
-const fileNames = pullList.map((file) => file.filename.includes('packages/'));
-const labelList = fileNames.filter((path) => path.split('/')[1]);
-_actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('label-list', labelList);
+  const fileNames = pullList.map((file) => file.filename.includes('packages/'));
+  const labelName = fileNames.filter((path) => path.split('/')[1]);
+  console.log('labelName:: ', labelName);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('label-list', labelName);
 
-const { data } = await octokit.rest.issues.addLabels({
-  owner: 'Khyosunny',
-  repo: 'monorepo-cicd',
-  issue_number: pullNumber,
-  labels: labelList,
-});
-console.log('d', data);
-// }
-// core.setFailed(error.message);
+  const { data } = await octokit.rest.issues.addLabels({
+    owner: 'Khyosunny',
+    repo: 'monorepo-cicd',
+    issue_number: pullNumber,
+    labels: labelName,
+  });
+  console.log('d..:', data);
+  // }
+} catch (error) {
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
+}
 
 // try {
 //   // const { data: pulls } = await octokit.request(
