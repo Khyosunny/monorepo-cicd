@@ -60,7 +60,7 @@ try {
   console.log('d', data);
   // }
 } catch (error) {
-  console.log('error: ', error);
+  core.setFailed(error.message);
 }
 
 // try {
