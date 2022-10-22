@@ -17,7 +17,7 @@ jobs:
       - name: Check out repo content
         uses: actions/checkout@v3
       - name: Run script
-        uses: ./
+        uses: Khyosunny/labeler@v1
         id: labels-script
         with:
           pr-number: ${{ github.event.number }}
