@@ -1,4 +1,6 @@
 name: Set Label
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
   pull_request:
@@ -29,5 +31,3 @@ jobs:
       - name: label list
         run: |
           echo "${{ steps.labels-script.outputs.label-list }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
