@@ -6,7 +6,7 @@ function HomePage() {
     <main>
       <h1>Hi</h1>
       <Button>Github Action !</Button>
-      <p>test</p>
+      <p>test3</p>
     </main>
   );
 }
