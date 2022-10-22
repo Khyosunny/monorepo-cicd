@@ -10,4 +10,4 @@ outputs:
 
 runs:
   using: 'node16'
-  main: 'create-labels-script.mjs'
+  main: 'dist/create-labels-script.mjs'
