@@ -8,7 +8,7 @@ const octokit = new Octokit({
 
 try {
   const pullNumber = core.getInput('pr-number');
-  console.log('pullNumber', pullNumber);
+  console.log('pullNumber..:', pullNumber);
   // const { data: allList } = await octokit.rest.pulls.list({
   //   owner: 'Khyosunny',
   //   repo: 'monorepo-cicd',
@@ -27,13 +27,14 @@ try {
   const { data: pullList } = await octokit.rest.pulls.listFiles({
     owner: 'Khyosunny',
     repo: 'monorepo-cicd',
-    pull_number: pullNumber,
+    pull_number: 73,
   });
 
   const fileNames = pullList
     .filter((file) => file.filename.includes('packages/'))
     .map((files) => files.filename);
   console.log('fileNames:: ', fileNames);
+
   if (fileNames.length === 0) throw new Error('No files changed');
   const labelName = fileNames.map((path) => path.split('/')[1]);
   console.log('labelName:: ', labelName);
