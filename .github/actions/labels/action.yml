@@ -9,4 +9,4 @@ outputs:
 
 runs:
   using: 'node16'
-  main: '../../dist/index.mjs'
+  main: '../../../dist/index.mjs'
