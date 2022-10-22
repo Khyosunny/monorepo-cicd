@@ -1,23 +1,24 @@
+name: Set Label
+
 on:
   pull_request:
     types: [opened]
     branches:
       - master
-
 jobs:
   apply-label:
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
-   steps:
+    steps:
       - name: Check out repo content
         uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: '16'
           cache: npm
 
       - name: Install dependencies
@@ -27,7 +28,6 @@ jobs:
         uses: ./.github/actions/labels
         id: labels-script
         with:
-          number: ${{ github.event.number }}
+          pr-number: ${{ github.event.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

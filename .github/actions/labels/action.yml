@@ -1,10 +1,9 @@
 name: 'create pull request labels'
 
 inputs:
-  number:
+  pr-number:
     description: 'PR number'
     required: false
-
 outputs:
   label-list:
     description: '경로에 해당하는 라벨 리스트'
