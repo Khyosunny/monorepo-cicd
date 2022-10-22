@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Run script
-        uses: actions/labels@master
+        uses: Khyosunny/labels@master
         id: labels-script
         with:
           pr-number: ${{ github.event.number }}
