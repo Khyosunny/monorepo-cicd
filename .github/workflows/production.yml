@@ -10,11 +10,6 @@ jobs:
     name: 'test production client'
     steps:
       - uses: actions/checkout@v3
-
-      - uses: ./.github/actions/test
-        id: foo
-        with:
-          status: 'client'
         # - name: Install Vercel CLI
         #   run: npm install --global vercel@latest
         # - name: Deploy Project Artifacts to Vercel
@@ -22,6 +17,3 @@ jobs:
         #   env:
         #     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
         #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      - name: echo
-        run: |
-          echo '${{ steps.foo.outputs.path-variable }}'

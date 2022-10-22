@@ -16,6 +16,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
     "common": "*",
     "next": "^12.3.1",
     "next-transpile-modules": "^9.0.0",

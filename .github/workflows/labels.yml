@@ -3,22 +3,33 @@ on:
     types: [opened]
     branches:
       - master
-    paths:
-      - packages/common/**
-      - packages/client/**
+
 jobs:
   apply-label:
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
-    steps:
-      - uses: actions/github-script@v6
+   steps:
+      - name: Check out repo content
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['client']
-            })
+          node-version: 16
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install octokit
+
+      - name: Run script
+        uses: ./.github/actions/labels
+        id: labels-script
+        with:
+          number: ${{ github.event.number }}
+      - name: set label
+        
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
