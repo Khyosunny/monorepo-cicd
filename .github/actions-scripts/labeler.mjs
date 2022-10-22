@@ -36,7 +36,7 @@ try {
   console.log('fileNames:: ', fileNames);
 
   if (fileNames.length === 0) throw new Error('No files changed');
-  const labelName = fileNames.map((path) => path.split('/')[1]);
+  const labelName = fileNames.map((path) => path.toString().split('/')[1]);
   console.log('labelName:: ', labelName);
   core.setOutput('label-list', labelName);
 
