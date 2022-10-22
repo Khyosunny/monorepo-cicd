@@ -30,7 +30,9 @@ try {
     pull_number: pullNumber,
   });
 
-  const fileNames = pullList.map((file) => file.filename.includes('packages/'));
+  const fileNames = pullList.filter((file) =>
+    file.filename.includes('packages/')
+  );
   console.log('fileNames:: ', fileNames);
   if (fileNames.length === 0) return;
 
