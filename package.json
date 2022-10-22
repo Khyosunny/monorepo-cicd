@@ -12,7 +12,7 @@
   "scripts": {
     "client": "yarn workspace client dev",
     "client2": "yarn workspace client2 dev",
-    "build": "ncc build .github/actions-scripts/create-labels-script.mjs -o dist"
+    "build": "ncc build .github/actions-scripts/labeler.mjs -o dist"
   },
   "author": "",
   "license": "MIT",
