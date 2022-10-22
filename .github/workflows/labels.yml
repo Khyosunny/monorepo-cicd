@@ -1,6 +1,4 @@
 name: Set Label
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
   pull_request:
@@ -17,10 +15,12 @@ jobs:
       - name: Check out repo content
         uses: actions/checkout@v3
       - name: Run script
-        uses: Khyosunny/labeler@v1
+        uses: ./.github/actions/labels@master
         id: labels-script
         with:
           pr-number: ${{ github.event.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: label list
         run: |
           echo "${{ steps.labels-script.outputs.label-list }}"
