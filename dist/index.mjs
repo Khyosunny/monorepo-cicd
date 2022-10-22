@@ -20180,18 +20180,17 @@ try {
   console.log('fileNames:: ', fileNames);
 
   if (fileNames.length === 0) throw new Error('No files changed');
-  const labelName = fileNames.map((path) => path);
+  const labelName = fileNames.map((path) => path.split('/')[1]);
   console.log('labelName:: ', labelName);
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('label-list', labelName);
 
-  // const { data } = await octokit.rest.issues.addLabels({
-  //   owner: 'Khyosunny',
-  //   repo: 'monorepo-cicd',
-  //   issue_number: pullNumber,
-  //   labels: labelName,
-  // });
-  // console.log('d..:', data);
-  // }
+  const { data } = await octokit.rest.issues.addLabels({
+    owner: 'Khyosunny',
+    repo: 'monorepo-cicd',
+    issue_number: pullNumber,
+    labels: labelName,
+  });
+  console.log('d..:', data);
 } catch (error) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(error.message);
 }
