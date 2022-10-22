@@ -47,7 +47,6 @@ try {
     labels: labelName,
   });
   console.log('d..:', data);
-  }
 } catch (error) {
   core.setFailed(error.message);
 }
