@@ -2,11 +2,12 @@ import { Octokit } from 'octokit';
 import core from '@actions/core';
 // import github from '@actions/github';
 
-const octokit = new Octokit({
-  auth: process.env.TOKEN,
-});
-
 try {
+  const TOKEN = core.getInput('TOKEN');
+  const octokit = new Octokit({
+    auth: TOKEN,
+  });
+
   const pullNumber = core.getInput('pr-number');
   console.log('pullNumber..:', pullNumber);
   // const { data: allList } = await octokit.rest.pulls.list({

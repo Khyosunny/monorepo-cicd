@@ -14,12 +14,11 @@ jobs:
     steps:
       - name: Check out repo content
         uses: actions/checkout@v3
-      - name: script build
-        run: ncc build .github/actions-scripts/labeler.mjs -o dist
       - name: Run script
         uses: ./.github/actions/labeler
         id: labels-script
         with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pr-number: ${{ github.event.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
