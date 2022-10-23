@@ -9,7 +9,6 @@ try {
   });
 
   const pullNumber = core.getInput('pr-number');
-
   const { data: pullList } = await octokit.rest.pulls.listFiles({
     ...github.context.repo,
     pull_number: pullNumber,
