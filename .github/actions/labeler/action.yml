@@ -1,7 +1,7 @@
 name: 'create pull request labels'
 
 inputs:
-  TOKEN:
+  repo-token:
     description: 'My github token'
   pr-number:
     description: 'PR number'

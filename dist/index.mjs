@@ -20146,11 +20146,12 @@ __nccwpck_require__.a(__webpack_module__, async (__webpack_handle_async_dependen
 
 // import github from '@actions/github';
 
-const octokit = new octokit__WEBPACK_IMPORTED_MODULE_1__/* .Octokit */ .vd({
-  auth: process.env.TOKEN,
-});
-
 try {
+  const TOKEN = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('TOKEN');
+  const octokit = new octokit__WEBPACK_IMPORTED_MODULE_1__/* .Octokit */ .vd({
+    auth: TOKEN,
+  });
+
   const pullNumber = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('pr-number');
   console.log('pullNumber..:', pullNumber);
   // const { data: allList } = await octokit.rest.pulls.list({
