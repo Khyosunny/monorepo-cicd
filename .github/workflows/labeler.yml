@@ -16,12 +16,11 @@ jobs:
         uses: actions/checkout@v3
       - name: Run script
         uses: ./.github/actions/labeler
-        id: labels-script
+        id: labeler-action
         with:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           pr-number: ${{ github.event.number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: label list
         run: |
-          echo "${{ steps.labels-script.outputs.label-list }}"
+          echo "${{ steps.labeler-action.outputs.label-list }}"
