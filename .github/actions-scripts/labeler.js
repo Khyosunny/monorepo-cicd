@@ -1,6 +1,6 @@
-import { Octokit } from 'octokit';
-import core from '@actions/core';
-import github from '@actions/github';
+const { Octokit } = require('octokit');
+const core = require('@actions/core');
+const github = require('@actions/github');
 
 try {
   const TOKEN = core.getInput('repo-token');
@@ -9,12 +9,12 @@ try {
   });
 
   const pullNumber = core.getInput('pr-number');
-  const { data: pullList } = await octokit.rest.pulls.listFiles({
+  const { data: pullListFiles } = await octokit.rest.pulls.listFiles({
     ...github.context.repo,
     pull_number: pullNumber,
   });
 
-  const fileNames = pullList
+  const fileNames = pullListFiles
     .filter((files) => files.filename.includes('packages/'))
     .map((file) => file.filename);
   console.log('fileNames:: ', fileNames);
