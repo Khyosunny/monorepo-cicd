@@ -1,0 +1,11 @@
+name: 'release drafter'
+
+inputs:
+  repo-token:
+    description: 'My github token'
+  pr-number:
+    description: 'PR number'
+
+runs:
+  using: 'node16'
+  main: '../../../dist/release/index.mjs'

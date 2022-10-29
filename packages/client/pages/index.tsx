@@ -6,7 +6,7 @@ function HomePage() {
     <main>
       <h1>Hi</h1>
       <Button>Github Action !</Button>
-      <p>zzzzdzzzzzzz!zz</p>
+      <p>11z</p>
     </main>
   );
 }

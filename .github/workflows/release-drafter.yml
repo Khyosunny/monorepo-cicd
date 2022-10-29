@@ -17,3 +17,22 @@
 #           config-name: release-drafter-config.yml
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  merge-job:
+    # if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo content
+        uses: actions/checkout@v3
+      - name: Run script
+        uses: ./.github/actions/release-drafter
+        id: release-drafter-action
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ github.event.number }}

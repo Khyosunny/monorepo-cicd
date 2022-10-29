@@ -1,7 +1,6 @@
 import { Octokit } from 'octokit';
 import core from '@actions/core';
 import github from '@actions/github';
-import { getLabelNames } from '../lib/changed-files.mjs';
 
 try {
   const TOKEN = core.getInput('repo-token');
@@ -9,21 +8,17 @@ try {
     auth: TOKEN,
   });
   const pullNumber = core.getInput('pr-number');
-  const { data: pullListFiles } = await octokit.rest.pulls.listFiles({
+  const { data: status } = octokit.rest.pulls.checkIfMerged({
     ...github.context.repo,
     pull_number: pullNumber,
   });
-  const labelName = getLabelNames(pullListFiles, 'packages/');
+  console.log('status: ', status);
 
-  console.log('labelName:: ', labelName);
-  core.setOutput('label-list', labelName);
-
-  const { data } = await octokit.rest.issues.addLabels({
+  const { data } = await octokit.rest.issues.listLabelsOnIssue({
     ...github.context.repo,
     issue_number: pullNumber,
-    labels: labelName,
   });
-  console.log('d..:', data);
+  console.log('data:.:', data);
 } catch (error) {
   core.setFailed(error.message);
 }
