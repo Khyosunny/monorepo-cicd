@@ -1,18 +1,11 @@
-export function getChangedFiles(pullListFiles, paths) {
-  const changedFileNames = pullListFiles.map((listFile) => listFile.filename);
-  if (paths.includes('\n')) {
-    const splitPath = paths.split('\n');
-    return changedFileNames
-      .filter((fileName) => {
-        const directory = fileName.split('/');
-        const regx = new RegExp(`(${directory[0]})\/(${directory[1]})(\/?)`);
-        return splitPath.filter((path) => regx.test(path));
-      })
-      .flat();
-  }
-  return changedFileNames.filter((fileName) => {
-    const directory = fileName.split('/');
-    const regx = new RegExp(`^(${directory[0]})\/(${directory[1]})(\/?)`);
-    return regx.test(paths);
-  });
+export function getChangedFiles(pullListFiles, path) {
+  return pullListFiles
+    .map((listFile) => listFile.filename)
+    .filter((fileName) => fileName.includes(path));
+}
+
+export function getLabelNames(pullListFiles, path) {
+  const changedFiles = getChangedFiles(pullListFiles, path);
+  if (changedFiles.length === 0) throw new Error('No files changed');
+  return changedFiles.map((path) => path.split('/')[1]);
 }
