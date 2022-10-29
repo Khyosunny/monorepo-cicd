@@ -22800,7 +22800,7 @@ async function createLabel() {
     });
 
     console.log('pullListFiles::,', pullListFiles);
-    const changedFiles = getChangedFiles(pullListFiles);
+    const changedFiles = getChangedFiles(pullListFiles, 'packages/client');
     console.log('changedFiles::,', changedFiles);
 
     // const fileNames = pullListFiles
