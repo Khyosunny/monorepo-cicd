@@ -31,12 +31,12 @@ async function createLabel() {
     // console.log('labelName:: ', labelName);
     // core.setOutput('label-list', labelName);
 
-    // const { data } = await octokit.rest.issues.addLabels({
-    //   ...github.context.repo,
-    //   issue_number: pullNumber,
-    //   labels: labelName,
-    // });
-    // console.log('d..:', data);
+    const { data } = await octokit.rest.issues.addLabels({
+      ...github.context.repo,
+      issue_number: pullNumber,
+      labels: 'client',
+    });
+    console.log('d..:', data);
   } catch (error) {
     core.setFailed(error.message);
   }
