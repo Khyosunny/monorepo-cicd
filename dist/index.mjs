@@ -22762,23 +22762,25 @@ var core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
 var github = __nccwpck_require__(5438);
 ;// CONCATENATED MODULE: ./.github/lib/changed-files.mjs
-function getChangedFiles(pullListFiles, paths) {
-  const changedFileNames = pullListFiles.map((listFile) => listFile.filename);
-  if (paths.includes('\n')) {
-    const splitPath = paths.split('\n');
-    return changedFileNames
-      .filter((fileName) => {
-        const directory = fileName.split('/');
-        const regx = new RegExp(`(${directory[0]})\/(${directory[1]})(\/?)`);
-        return splitPath.filter((path) => regx.test(path));
-      })
-      .flat();
-  }
-  return changedFileNames.filter((fileName) => {
-    const directory = fileName.split('/');
-    const regx = new RegExp(`^(${directory[0]})\/(${directory[1]})(\/?)`);
-    return regx.test(paths);
-  });
+function getChangedFiles(pullListFiles, path) {
+  return pullListFiles
+    .map((listFile) => listFile.filename)
+    .filter((fileName) => fileName.includes(path));
+  // if (paths.includes('\n')) {
+  //   const splitPath = paths.split('\n');
+  //   return changedFileNames
+  //     .filter((fileName) => {
+  //       const directory = fileName.split('/');
+  //       const regx = new RegExp(`(${directory[0]})\/(${directory[1]})(\/?)`);
+  //       return splitPath.filter((path) => regx.test(path));
+  //     })
+  //     .flat();
+  // }
+  // return changedFileNames.filter((fileName) => {
+  //   const directory = fileName.split('/');
+  //   const regx = new RegExp(`^(${directory[0]})\/(${directory[1]})(\/?)`);
+  //   return regx.test(paths);
+  // });
 }
 
 ;// CONCATENATED MODULE: ./.github/actions-scripts/labeler.mjs
@@ -22800,7 +22802,7 @@ async function createLabel() {
     });
 
     console.log('pullListFiles::,', pullListFiles);
-    const changedFiles = getChangedFiles(pullListFiles, 'packages/client');
+    const changedFiles = getChangedFiles(pullListFiles, 'packages/');
     console.log('changedFiles::,', changedFiles);
 
     // const fileNames = pullListFiles
@@ -22812,13 +22814,16 @@ async function createLabel() {
 
     if (changedFiles.length === 0) throw new Error('No files changed');
     // const labelName = fileNames.map((path) => path.split('/')[1]);
-    // console.log('labelName:: ', labelName);
     // core.setOutput('label-list', labelName);
+
+    const labelName = changedFiles.map((path) => path.split('/')[1]);
+    console.log('labelName:: ', labelName);
+    core.setOutput('label-list', labelName);
 
     const { data } = await octokit.rest.issues.addLabels({
       ...github.context.repo,
       issue_number: pullNumber,
-      labels: 'client',
+      labels: labelName,
     });
     console.log('d..:', data);
   } catch (error) {

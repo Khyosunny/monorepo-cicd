@@ -16,7 +16,7 @@ async function createLabel() {
     });
 
     console.log('pullListFiles::,', pullListFiles);
-    const changedFiles = getChangedFiles(pullListFiles, 'packages/client');
+    const changedFiles = getChangedFiles(pullListFiles, 'packages/');
     console.log('changedFiles::,', changedFiles);
 
     // const fileNames = pullListFiles
@@ -28,13 +28,16 @@ async function createLabel() {
 
     if (changedFiles.length === 0) throw new Error('No files changed');
     // const labelName = fileNames.map((path) => path.split('/')[1]);
-    // console.log('labelName:: ', labelName);
     // core.setOutput('label-list', labelName);
+
+    const labelName = changedFiles.map((path) => path.split('/')[1]);
+    console.log('labelName:: ', labelName);
+    core.setOutput('label-list', labelName);
 
     const { data } = await octokit.rest.issues.addLabels({
       ...github.context.repo,
       issue_number: pullNumber,
-      labels: 'client',
+      labels: labelName,
     });
     console.log('d..:', data);
   } catch (error) {
