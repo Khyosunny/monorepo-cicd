@@ -5,9 +5,6 @@ inputs:
     description: 'My github token'
   pr-number:
     description: 'PR number'
-outputs:
-  label-list:
-    description: '경로에 해당하는 라벨 리스트'
 
 runs:
   using: 'node16'

@@ -37,9 +37,39 @@ async function getCommits() {
 
     const { data: listCommits } = await octokit.rest.repos.listCommits({
       ...github.context.repo,
-      since: lastRelease ? lastRelease.created_at : '',
+      since: lastRelease ? lastRelease.created_at : undefined,
     });
     console.log('listCommits::', listCommits);
+
+    if (listCommits.length > 0) {
+      const commitSha = listCommits.map((list) => list.sha);
+      const labelNameList = [];
+
+      for (const sha of commitSha) {
+        const { data: listPullRequestWithCommit } =
+          await octokit.rest.repos.listPullRequestsAssociatedWithCommit({
+            ...github.context.repo,
+            commit_sha: sha,
+          });
+
+        for (const list of listPullRequestWithCommit) {
+          // 배열에 라벨 네임 중복으로 들어가지 않게 new Set
+          const labelNames = list.labels.map((label) => label.name);
+          labelNameList.push(...labelNames);
+        }
+      }
+
+      const uniqueLabelNameList = [...new Set(labelNameList)];
+      console.log('!!uniqueLabelNameList::', uniqueLabelNameList);
+
+      if (uniqueLabelNameList.length > 1) {
+        core.setOutput('label-list', 'ALL');
+      } else {
+        uniqueLabelNameList[0] === 'common'
+          ? core.setOutput('label-name', 'ALL')
+          : core.setOutput('label-name', uniqueLabelNameList[0]);
+      }
+    }
   } catch (error) {
     core.setFailed(error.message);
   }

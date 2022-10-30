@@ -20,7 +20,3 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pr-number: ${{ github.event.number }}
-
-      - name: label list
-        run: |
-          echo "${{ steps.labeler-action.outputs.label-list }}"
