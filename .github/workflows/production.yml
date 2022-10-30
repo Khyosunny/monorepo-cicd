@@ -16,4 +16,4 @@ jobs:
 
       - name: echo release
         run: |
-          echo "${{ github.event.release }}"
+          echo "${{ toJSON(github.event.release) }}"
