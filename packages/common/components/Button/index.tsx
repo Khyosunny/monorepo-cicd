@@ -6,7 +6,6 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({ children, ...rest }: Props) {
-  console.log('..');
   return <button {...rest}>{children}</button>;
 }
 
