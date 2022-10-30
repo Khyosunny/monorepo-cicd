@@ -5,6 +5,9 @@ inputs:
     description: 'My github token'
     require: false
     default: ''
+outputs:
+  label-name:
+    description: 'label name'
 
 runs:
   using: 'node16'

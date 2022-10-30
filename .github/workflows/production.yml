@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - name: call deploy
-      #   uses: ./.github/workflows/call-workflow.yml
-      #   with:
-      #     config-path: ${{ github.event.release }}
 
       # 커밋리스트 가져오기 마지막 퍼블리쉬된 since 설정
       - name: Run release-action script
@@ -20,3 +16,10 @@ jobs:
         id: release-action
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: label list
+        run: |
+          echo '${{ steps.release-action.outputs.label-name }}'
+      - name: call deploy
+        uses: ./.github/workflows/call-workflow.yml
+        with:
+          target-project: ${{ steps.release-action.outputs.label-name }}
