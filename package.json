@@ -13,7 +13,7 @@
     "client": "yarn workspace client dev",
     "client2": "yarn workspace client2 dev",
     "build:labeler": "ncc build .github/actions-scripts/labeler.js -o dist/labeler",
-    "build:release": "ncc build .github/actions-scripts/release.mjs -o dist/release",
+    "build:release": "ncc build .github/actions-scripts/release.js -o dist/release",
     "build": "concurrently 'npm:build:labeler' 'npm:build:release'"
   },
   "author": "",

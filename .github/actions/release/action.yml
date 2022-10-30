@@ -3,8 +3,8 @@ name: 'release drafter'
 inputs:
   repo-token:
     description: 'My github token'
-  pr-number:
-    description: 'PR number'
+    require: false
+    default: ''
 
 runs:
   using: 'node16'
