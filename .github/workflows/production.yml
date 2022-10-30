@@ -16,13 +16,5 @@ jobs:
       #     config-path: ${{ github.event.release }}
 
       - name: echo release
-        run:
+        run: |
           echo "${{ github.event.release }}"
-
-          # - name: Install Vercel CLI
-          #   run: npm install --global vercel@latest
-          # - name: Deploy Project Artifacts to Vercel
-          #   run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-          #   env:
-          #     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
-          #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
