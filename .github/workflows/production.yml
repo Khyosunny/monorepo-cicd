@@ -20,7 +20,3 @@ jobs:
         id: release-action
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: echo release
-        run: |
-          echo "${{ toJSON(github.event.release) }}"

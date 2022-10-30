@@ -22883,8 +22883,9 @@ async function getCommits() {
       listReleases.filter((r) => !r.draft)
     );
     const draftRelease = listReleases.find((r) => r.draft);
+    console.log('draftRelease~!!:', draftRelease);
     const lastRelease =
-      sortedPublishedReleases[sortedPublishedReleases.length - 1];
+      sortedPublishedReleases[sortedPublishedReleases.length - 2];
     console.log('lastRelease~~~::', lastRelease);
 
     const { data: listCommits } = await octokit.rest.repos.listCommits({
