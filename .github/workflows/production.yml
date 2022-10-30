@@ -6,24 +6,23 @@ on:
 
 jobs:
   deploy:
-    # runs-on: ubuntu-latest
-    # name: 'test production client'
-    # - name: Check out repo content
-    #   uses: actions/checkout@v3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo content
+        uses: actions/checkout@v3
+      # - name: call deploy
+      #   uses: ./.github/workflows/call-workflow.yml
+      #   with:
+      #     config-path: ${{ github.event.release }}
 
-    # - name: call deploy
-    #   uses: ./.github/workflows/call-workflow.yml
-    #   with:
-    #     config-path: ${{ github.event.release }}
+      - name: echo release
+        run:
+          echo "${{ github.event.release }}"
 
-    - name: event test
-      run:
-        echo "${{ github.event.release }}"
-
-        # - name: Install Vercel CLI
-        #   run: npm install --global vercel@latest
-        # - name: Deploy Project Artifacts to Vercel
-        #   run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-        #   env:
-        #     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
-        #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          # - name: Install Vercel CLI
+          #   run: npm install --global vercel@latest
+          # - name: Deploy Project Artifacts to Vercel
+          #   run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+          #   env:
+          #     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
+          #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
