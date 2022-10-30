@@ -16,10 +16,7 @@ jobs:
         id: release-action
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: label list
-        run: |
-          echo '${{ steps.release-action.outputs.label-name }}'
       - name: call deploy
-        uses: ./.github/workflows/call-workflow.yml
+        uses: ./call-workflow.yml
         with:
           target-project: ${{ steps.release-action.outputs.label-name }}
