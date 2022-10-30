@@ -1,22 +1,5 @@
-# name: Release Drafter
+name: Release Drafter
 
-# on:
-#   push:
-#     branches:
-#       - master
-#     paths:
-#       - packages/common/**
-#       - packages/client/**
-
-# jobs:
-#   update_release_draft:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: release-drafter/release-drafter@v5
-#         with:
-#           config-name: release-drafter-config.yml
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 on:
   pull_request:
     types: [closed]
@@ -24,15 +7,11 @@ on:
       - master
 
 jobs:
-  merge-job:
-    if: github.event.pull_request.merged == true
+  update_release_draft:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo content
-        uses: actions/checkout@v3
-      - name: Run script
-        uses: ./.github/actions/release-drafter
-        id: release-drafter-action
+      - uses: release-drafter/release-drafter@v5
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          pr-number: ${{ github.event.number }}
+          config-name: release-drafter-config.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

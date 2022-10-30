@@ -6,10 +6,20 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    name: 'test production client'
-    steps:
-      - uses: actions/checkout@v3
+    # runs-on: ubuntu-latest
+    # name: 'test production client'
+    # - name: Check out repo content
+    #   uses: actions/checkout@v3
+
+    # - name: call deploy
+    #   uses: ./.github/workflows/call-workflow.yml
+    #   with:
+    #     config-path: ${{ github.event.release }}
+
+    - name: event test
+      run:
+        echo "${{ github.event.release }}"
+
         # - name: Install Vercel CLI
         #   run: npm install --global vercel@latest
         # - name: Deploy Project Artifacts to Vercel

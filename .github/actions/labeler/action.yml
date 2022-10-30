@@ -11,4 +11,4 @@ outputs:
 
 runs:
   using: 'node16'
-  main: '../../../dist/labeler/index.mjs'
+  main: '../../../dist/labeler/index.js'

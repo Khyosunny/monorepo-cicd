@@ -8,4 +8,4 @@ inputs:
 
 runs:
   using: 'node16'
-  main: '../../../dist/release/index.mjs'
+  main: '../../../dist/release/index.js'
