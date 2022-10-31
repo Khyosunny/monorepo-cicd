@@ -9,7 +9,6 @@ env:
 
 jobs:
   target-package-job:
-    uses: ./.github/actions/target-package
     runs-on: ubuntu-latest
     outputs:
       target-package-name:
