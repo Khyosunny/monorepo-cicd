@@ -1,0 +1,57 @@
+name: Deploy production
+
+on:
+  release:
+    types: [published]
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+
+jobs:
+  target-package-job:
+    uses: ./.github/actions/target-package
+    runs-on: ubuntu-latest
+    outputs:
+      target-package-name: ${{ steps.changed-files-global.outputs.any_changed }}
+    steps:
+      - uses: actions/checkout@v3
+        id: target-package-action
+
+  target-package-job2:
+    needs: target-package-job
+    runs-on: ubuntu-latest
+    name: 'production deploy'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run release-action script
+        uses: ./.github/actions/target-package
+        id: target-package-action
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - if: inputs.target-project == 'client'
+        name: Deploy Project Client Artifacts to Vercel
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
+      - if: inputs.target-project == 'client2'
+        name: Deploy Project Client2 Artifacts to Vercel
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST2 }}
+
+    # deploy:
+    #   steps:
+    #     - uses: actions/checkout@v3
+
+    # 커밋리스트 가져오기 마지막 퍼블리쉬된 since 설정
+    # - name: Run release-action script
+    #   uses: ./.github/actions/release
+    #   id: release-action
+    #   with:
+    #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Run call deploy
+    #   uses: ./.github/workflows/call-workflow.yml
+    #   with:
+    #     target-project: ${{ steps.release-action.outputs.build-trigger-name }}

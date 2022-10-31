@@ -1,0 +1,12 @@
+name: 'target package name'
+
+inputs:
+  repo-token:
+    description: 'My github token'
+outputs:
+  target-package-name:
+    description: 'target package name'
+
+runs:
+  using: 'node16'
+  main: '../../../dist/target-package/index.js'

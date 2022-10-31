@@ -1,0 +1,17 @@
+name: 'package deploy trigger action'
+description: '배포에 필요한 패키지명 가져오기'
+inputs:
+  target-package:
+    description: 'target-package'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+
+    # 커밋리스트 가져오기 마지막 퍼블리쉬된 since 설정
+    - name: Run release-action script
+      uses: ./.github/actions/release
+      id: release-action
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
