@@ -12,10 +12,15 @@ jobs:
     uses: ./.github/actions/target-package
     runs-on: ubuntu-latest
     outputs:
-      target-package-name: ${{ steps.changed-files-global.outputs.any_changed }}
+      target-package-name:
+        ${{ steps.target-package-action.outputs.target-package-name }}
     steps:
       - uses: actions/checkout@v3
+      - name: Run target-package-action script
+        uses: ./.github/actions/target-package
         id: target-package-action
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   target-package-job2:
     needs: target-package-job
@@ -23,19 +28,14 @@ jobs:
     name: 'production deploy'
     steps:
       - uses: actions/checkout@v3
-      - name: Run release-action script
-        uses: ./.github/actions/target-package
-        id: target-package-action
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
-      - if: inputs.target-project == 'client'
+      - if: needs.target-package-job.outputs.target-package-name == 'client'
         name: Deploy Project Client Artifacts to Vercel
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
-      - if: inputs.target-project == 'client2'
+      - if: needs.target-package-job.outputs.target-package-name == 'client2'
         name: Deploy Project Client2 Artifacts to Vercel
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
