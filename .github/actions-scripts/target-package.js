@@ -35,6 +35,7 @@ async function getCommits() {
       sortedPublishedReleases[sortedPublishedReleases.length - 2];
     console.log('lastRelease~~~::', lastRelease);
 
+    // lastRelease의 created_at 이후에 생성된 커밋들 가져오기
     const { data: listCommits } = await octokit.rest.repos.listCommits({
       ...github.context.repo,
       since: lastRelease ? lastRelease.created_at : undefined,
@@ -52,22 +53,24 @@ async function getCommits() {
             commit_sha: sha,
           });
 
+        // 해당 커밋들이 속한 PR의 라벨 네임 추출하기
         for (const list of listPullRequestWithCommit) {
-          // 배열에 라벨 네임 중복으로 들어가지 않게 new Set
           const labelNames = list.labels.map((label) => label.name);
           labelNameList.push(...labelNames);
         }
       }
 
+      // 배열에 라벨 네임 중복으로 들어가지 않게 new Set
       const uniqueLabelNameList = [...new Set(labelNameList)];
       console.log('!!uniqueLabelNameList::', uniqueLabelNameList);
 
-      if (uniqueLabelNameList.length > 1) {
-        core.setOutput('label-list', 'ALL');
+      // 라벨이 1개고 common 라벨만 있다면 모든 패키지를 빌드하기 위해 ALL
+      if (uniqueLabelNameList.includes('common')) {
+        core.setOutput('target-package-name', 'ALL');
+      } else if (uniqueLabelNameList.length === 1) {
+        core.setOutput('target-package-name', uniqueLabelNameList[0]);
       } else {
-        uniqueLabelNameList[0] === 'common'
-          ? core.setOutput('label-name', 'ALL')
-          : core.setOutput('label-name', uniqueLabelNameList[0]);
+        core.setOutput('target-package-name', uniqueLabelNameList.join(','));
       }
     }
   } catch (error) {
