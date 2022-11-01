@@ -4,53 +4,42 @@ on:
   release:
     types: [published]
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-
 jobs:
-  target-package-job:
+  target-workspace-job:
     runs-on: ubuntu-latest
     outputs:
-      target-package-name:
-        ${{ steps.target-package-action.outputs.target-package-name }}
+      target-workspace-name:
+        ${{ steps.target-workspace-action.outputs.target-workspace-name }}
     steps:
       - uses: actions/checkout@v3
-      - name: Run target-package-action script
-        uses: ./.github/actions/target-package
-        id: target-package-action
+      - name: Run target-workspace-action script
+        uses: ./.github/actions/target-workspace
+        id: target-workspace-action
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-  target-package-job2:
-    needs: target-package-job
-    runs-on: ubuntu-latest
-    name: 'production deploy'
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - if: needs.target-package-job.outputs.target-package-name == 'client'
-        name: Deploy Project Client Artifacts to Vercel
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
-      - if: needs.target-package-job.outputs.target-package-name == 'client2'
-        name: Deploy Project Client2 Artifacts to Vercel
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST2 }}
+  vercel-deploy-workflow-call:
+    uses: ./.github/workflows/vercel-deploy_matrix.yml
+    with:
+      target-workspace:
+        ${{ needs.target-workspace-job.outputs.target-workspace-name }}
 
-    # deploy:
-    #   steps:
-    #     - uses: actions/checkout@v3
-
-    # 커밋리스트 가져오기 마지막 퍼블리쉬된 since 설정
-    # - name: Run release-action script
-    #   uses: ./.github/actions/release
-    #   id: release-action
-    #   with:
-    #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-    # - name: Run call deploy
-    #   uses: ./.github/workflows/call-workflow.yml
-    #   with:
-    #     target-project: ${{ steps.release-action.outputs.build-trigger-name }}
+    # needs: target-workspace-job
+    # runs-on: ubuntu-latest
+    # name: 'production deploy'
+    # steps:
+    #   - uses: actions/checkout@v3
+    #   - name: Install Vercel CLI
+    #     run: npm install --global vercel@latest
+    #   - if: needs.target-workspace-job.outputs.target-workspace-name == 'client'
+    #     name: Deploy Project Client Artifacts to Vercel
+    #     run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+    #     env:
+    #       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    #       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST }}
+    #   - if: needs.target-package-job.outputs.target-package-name == 'client2'
+    #     name: Deploy Project Client2 Artifacts to Vercel
+    #     run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+    #     env:
+    #       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    #       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_TEST2 }}

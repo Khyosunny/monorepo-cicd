@@ -13,13 +13,14 @@
     "client": "yarn workspace client dev",
     "client2": "yarn workspace client2 dev",
     "build:labeler": "ncc build .github/actions-scripts/labeler.js -o dist/labeler",
-    "build:target-package": "ncc build .github/actions-scripts/target-package.js -o dist/target-package",
-    "build": "concurrently 'npm:build:labeler' 'npm:build:target-package'"
+    "build:target-workspace": "ncc build .github/actions-scripts/target-workspace.js -o dist/target-workspace",
+    "build": "concurrently 'npm:build:labeler' 'npm:build:target-workspace'"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "common": "*",
+    "compare-versions": "^5.0.1",
     "next": "^12.3.1",
     "next-transpile-modules": "^9.0.0",
     "octokit": "^2.0.9",

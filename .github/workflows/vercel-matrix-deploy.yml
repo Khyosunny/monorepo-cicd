@@ -1,0 +1,32 @@
+name: 'vercel deploy workflow call'
+
+on:
+  workflow_call:
+    inputs:
+      target-workspace:
+        required: false
+        type: string
+
+jobs:
+  vercel-deploy-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - workspace: all
+          - workspace: client
+            VERCEL_PROJECT_ID: VERCEL_PROJECT_ID_TEST
+          - workspace: client2
+            VERCEL_PROJECT_ID: VERCEL_PROJECT_ID_TEST2
+
+    name: 'test production client'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - if: inputs.target-workspace == ${{ secrets[matrix.VERCEL_PROJECT_ID] }}
+        name: Deploy Project Client2 Artifacts to Vercel
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets[matrix.VERCEL_PROJECT_ID] }}

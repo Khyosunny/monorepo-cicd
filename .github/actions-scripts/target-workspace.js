@@ -1,6 +1,7 @@
 const { Octokit } = require('octokit');
 const core = require('@actions/core');
 const github = require('@actions/github');
+const compareVersions = require('compare-versions');
 
 function sortReleases(releases) {
   // 가장 큰 릴리즈 번호를 찾는다.
@@ -8,7 +9,7 @@ function sortReleases(releases) {
   try {
     return releases.sort((r1, r2) => compareVersions(r1.tag_name, r2.tag_name));
   } catch {
-    // tag_name 이 없어 비교가 안돨 때 created_at 으로 비교
+    // tag_name (버전) 이 없어 비교가 안돨 때 created_at 으로 비교
     return releases.sort(
       (r1, r2) => new Date(r1.created_at) - new Date(r2.created_at)
     );
@@ -41,6 +42,7 @@ async function getCommits() {
       since: lastRelease ? lastRelease.created_at : undefined,
     });
     console.log('listCommits::', listCommits);
+    console.log('lastRelease.created_at::', lastRelease.created_at);
 
     if (listCommits.length > 0) {
       const commitSha = listCommits.map((list) => list.sha);
@@ -66,11 +68,11 @@ async function getCommits() {
 
       // 라벨이 1개고 common 라벨만 있다면 모든 패키지를 빌드하기 위해 ALL
       if (uniqueLabelNameList.includes('common')) {
-        core.setOutput('target-package-name', 'ALL');
+        core.setOutput('target-workspace-name', 'ALL');
       } else if (uniqueLabelNameList.length === 1) {
-        core.setOutput('target-package-name', uniqueLabelNameList[0]);
+        core.setOutput('target-workspace-name', uniqueLabelNameList[0]);
       } else {
-        core.setOutput('target-package-name', uniqueLabelNameList.join(','));
+        core.setOutput('target-workspace-name', uniqueLabelNameList.join(','));
       }
     }
   } catch (error) {

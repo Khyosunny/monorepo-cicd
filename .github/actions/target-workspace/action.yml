@@ -1,11 +1,11 @@
-name: 'target package name'
+name: 'target workspace name'
 
 inputs:
   repo-token:
     description: 'My github token'
 outputs:
-  target-package-name:
-    description: 'target package name'
+  target-workspace-name:
+    description: 'target workspace name'
 
 runs:
   using: 'node16'
