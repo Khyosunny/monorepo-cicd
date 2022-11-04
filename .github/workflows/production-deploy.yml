@@ -19,7 +19,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   vercel-deploy-workflow-call:
-    uses: ./.github/workflows/vercel-deploy_matrix.yml
+    uses: ./.github/workflows/vercel-matrix-deploy.yml
     with:
       target-workspace:
         ${{ needs.target-workspace-job.outputs.target-workspace-name }}
