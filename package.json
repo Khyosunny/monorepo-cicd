@@ -14,7 +14,10 @@
     "client2": "yarn workspace client2 dev",
     "build:labeler": "ncc build .github/actions-scripts/labeler.js -o dist/labeler",
     "build:target-workspace": "ncc build .github/actions-scripts/target-workspace.js -o dist/target-workspace",
-    "build": "concurrently 'npm:build:labeler' 'npm:build:target-workspace'"
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev"
   },
   "author": "",
   "license": "MIT",
@@ -49,6 +52,7 @@
     "prettier": "^2.5.1",
     "puppeteer": "^13.1.1",
     "ts-jest": "^27.1.3",
+    "turbo": "^1.6.3",
     "typescript": "4.5.5"
   }
 }
